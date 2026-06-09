@@ -7,11 +7,13 @@ from email import policy
 from email.parser import BytesParser
 from urllib.parse import urlparse
 
-# ── CONFIG ──────────────────────────────────────────────
-VT_API_KEY      = "your_virustotal_api_key_here"
-ABUSEIPDB_KEY   = "your_abuseipdb_api_key_here"
-# ────────────────────────────────────────────────────────
+import os
+from pathlib import Path
+from dotenv import load_dotenv
 
+load_dotenv(Path(__file__).parent.parent / ".env")
+VT_API_KEY    = os.getenv("VT_API_KEY")
+ABUSEIPDB_KEY = os.getenv("ABUSEIPDB_KEY")
 
 def check_virustotal(domain):
     try:
