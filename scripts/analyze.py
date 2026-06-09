@@ -8,8 +8,8 @@ from email.parser import BytesParser
 from urllib.parse import urlparse
 
 # ── CONFIG ──────────────────────────────────────────────
-VT_API_KEY      = "5e2ce73b29c8582fc90fa8b0bd8cc4acf9e63cd0c7df8b034f657c72926e9465"
-ABUSEIPDB_KEY   = "d1c7a5161e3262355641d176fb6681ed71511d1e41def71b9fb029068b0b7424025b19a8942a3b5f"
+VT_API_KEY      = "your_virustotal_api_key_here"
+ABUSEIPDB_KEY   = "your_abuseipdb_api_key_here"
 # ────────────────────────────────────────────────────────
 
 
