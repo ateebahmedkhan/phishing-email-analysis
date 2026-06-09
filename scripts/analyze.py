@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).parent.parent / ".env")
+load_dotenv("/Users/khan/phishing-email-analysis/.env")
 VT_API_KEY    = os.getenv("VT_API_KEY")
 ABUSEIPDB_KEY = os.getenv("ABUSEIPDB_KEY")
 
