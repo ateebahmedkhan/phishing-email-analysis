@@ -112,6 +112,7 @@ Varies by sample — full response steps documented in each incident report. Gen
 ---
 
 ## Repository Structure
+
 phishing-email-analysis/
 ├── scripts/
 │   └── analyze.py              # Python analysis tool
