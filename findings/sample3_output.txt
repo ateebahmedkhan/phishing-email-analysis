@@ -1,0 +1,57 @@
+============================================================
+PHISHING EMAIL ANALYSIS REPORT
+============================================================
+
+[1] BASIC HEADERS
+  From       : Customer Care 2 <support@pcpilrjf.zendesk.com>
+  Reply-To   : Customer Care 2 <support+id407641@pcpilrjf.zendesk.com>
+  To         : Rodrigo-f-p <phishing@pot>
+  Subject    : Verify Your Wallet Now to Ensure Safe and Smooth Access
+  Date       : Sun, 06 Aug 2023 15:47:19 +0000
+
+[2] SPOOFING INDICATORS
+  From Domain    : pcpilrjf.zendesk.com
+  Reply-To Domain: pcpilrjf.zendesk.com
+  From and Reply-To domains match (or Reply-To absent)
+
+[3] AUTHENTICATION HEADERS
+  Received-SPF: Pass (protection.outlook.com: domain of pcpilrjf.zendesk.com designates 188.172.137.15 as permitted sender) receiver=pro
+  Authentication-Results: spf=pass (sender IP is 188.172.137.15) smtp.mailfrom=pcpilrjf.zendesk.com; dkim=pass (signature was verified) header.d=z
+  DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zendesk.com; q=dns/txt; s=zendesk1; t=1691336839; bh=DJ87LFr0FWCi0qROxFOTveYyvJ6
+  ARC-Authentication-Results: NOT PRESENT
+
+[4] RECEIVED CHAIN (email routing path)
+  Hop 1: from PH0PR19MB5428.namprd19.prod.outlook.com (2603:10b6:510:fe::21) by MN0PR19MB6312.namprd19.prod.outlook.com with HTTP
+  Hop 2: from MW4PR04CA0227.namprd04.prod.outlook.com (2603:10b6:303:87::22) by PH0PR19MB5428.namprd19.prod.outlook.com (2603:10b
+  Hop 3: from MW2NAM10FT067.eop-nam10.prod.protection.outlook.com (2603:10b6:303:87:cafe::3) by MW4PR04CA0227.outlook.office365.c
+  Hop 4: from outbyoip15.pod17.euw1.zdsys.com (188.172.137.15) by MW2NAM10FT067.mail.protection.outlook.com (10.13.154.76) with M
+  Hop 5: from zendesk.com (unknown [10.218.152.52])	by outbyoip15.pod17.euw1.zdsys.com (Postfix) with ESMTP id 4RJkNR52PSz14K2k	f
+
+[5] URLS FOUND IN BODY
+  URL    : http://trans.mailnr.com/DRAYLF?id=111651=dkxVUAIIDgAHHlMMAgxTBQQHAFtQVF9SBAkAUgoBBlEFAVdQUVhbBARVAlY
+  Domain : trans.mailnr.com
+
+  URL    : https://s3.ap-south-1.amazonaws.com/townscript-production/images/mobile-cover-uploaded/6808b43c-dedb
+  Domain : s3.ap-south-1.amazonaws.com
+
+  URL    : https://s3.ap-south-1.amazonaws.com/townscript-production/images/mobile-cover-uploaded/6808b43c-dedb
+  Domain : s3.ap-south-1.amazonaws.com
+
+
+[6] ATTACHMENTS
+  No attachments found
+
+[7] THREAT INTELLIGENCE ENRICHMENT
+
+  AbuseIPDB — Sending IP: 188.172.137.15
+  ✅  Clean — No reports, Country: GB, ISP: Zendesk International Limited
+
+  VirusTotal — Suspicious Domains:
+  Domain : s3.ap-south-1.amazonaws.com
+  Result : ✅  Clean — 0 detections out of 91 vendors
+  Domain : trans.mailnr.com
+  Result : ✅  Clean — 0 detections out of 91 vendors
+
+============================================================
+END OF REPORT
+============================================================
