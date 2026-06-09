@@ -112,21 +112,22 @@ Varies by sample — full response steps documented in each incident report. Gen
 ---
 
 ## Repository Structure
-
+```
 phishing-email-analysis/
 ├── scripts/
-│   └── analyze.py              # Python analysis tool
+│   └── analyze.py
 ├── findings/
-│   ├── incident-001.md         # Dutch solar panel phishing report
-│   ├── incident-002.md         # Microsoft impersonation report
-│   ├── incident-003.md         # Zendesk platform abuse report
-│   ├── sample1_output.png      # Terminal screenshot — sample 1
-│   ├── sample2_output.png      # Terminal screenshot — sample 2
-│   ├── sample3_output.png      # Terminal screenshot — sample 3
-│   ├── sample1_output.txt      # Raw tool output — sample 1
-│   ├── sample2_output.txt      # Raw tool output — sample 2
-│   └── sample3_output.txt      # Raw tool output — sample 3
-└── samples/                    # .eml files excluded for safety
+│   ├── incident-001.md
+│   ├── incident-002.md
+│   ├── incident-003.md
+│   ├── sample1_output.png
+│   ├── sample2_output.png
+│   ├── sample3_output.png
+│   ├── sample1_output.txt
+│   ├── sample2_output.txt
+│   └── sample3_output.txt
+└── samples/
+```
 
 > ⚠️ `.eml` sample files are excluded — phishing emails contain live malicious URLs. Download your own from [phishing_pot](https://github.com/rf-peixoto/phishing_pot)
 
