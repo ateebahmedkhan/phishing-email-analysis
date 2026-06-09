@@ -1,9 +1,57 @@
 import email
 import sys
 import re
+import json
+import urllib.request
 from email import policy
 from email.parser import BytesParser
 from urllib.parse import urlparse
+
+# ── CONFIG ──────────────────────────────────────────────
+VT_API_KEY      = "5e2ce73b29c8582fc90fa8b0bd8cc4acf9e63cd0c7df8b034f657c72926e9465"
+ABUSEIPDB_KEY   = "d1c7a5161e3262355641d176fb6681ed71511d1e41def71b9fb029068b0b7424025b19a8942a3b5f"
+# ────────────────────────────────────────────────────────
+
+
+def check_virustotal(domain):
+    try:
+        url = f"https://www.virustotal.com/api/v3/domains/{domain}"
+        req = urllib.request.Request(url, headers={"x-apikey": VT_API_KEY})
+        with urllib.request.urlopen(req, timeout=10) as response:
+            data = json.loads(response.read())
+        stats = data["data"]["attributes"]["last_analysis_stats"]
+        malicious = stats.get("malicious", 0)
+        suspicious = stats.get("suspicious", 0)
+        total = sum(stats.values())
+        if malicious > 0 or suspicious > 0:
+            return f"⚠️  FLAGGED — {malicious} malicious, {suspicious} suspicious out of {total} vendors"
+        else:
+            return f"✅  Clean — 0 detections out of {total} vendors"
+    except Exception as e:
+        return f"Could not retrieve VirusTotal data: {e}"
+
+
+def check_abuseipdb(ip):
+    try:
+        url = f"https://api.abuseipdb.com/api/v2/check?ipAddress={ip}&maxAgeInDays=90"
+        req = urllib.request.Request(url, headers={
+            "Key": ABUSEIPDB_KEY,
+            "Accept": "application/json"
+        })
+        with urllib.request.urlopen(req, timeout=10) as response:
+            data = json.loads(response.read())
+        d = data["data"]
+        score = d["abuseConfidenceScore"]
+        reports = d["totalReports"]
+        country = d.get("countryCode", "Unknown")
+        isp = d.get("isp", "Unknown")
+        if score > 0:
+            return f"⚠️  FLAGGED — Abuse score: {score}/100, Reports: {reports}, Country: {country}, ISP: {isp}"
+        else:
+            return f"✅  Clean — No reports, Country: {country}, ISP: {isp}"
+    except Exception as e:
+        return f"Could not retrieve AbuseIPDB data: {e}"
+
 
 def analyze_email(filepath):
     with open(filepath, 'rb') as f:
@@ -50,18 +98,21 @@ def analyze_email(filepath):
     # --- Received Chain ---
     print("\n[4] RECEIVED CHAIN (email routing path)")
     received = msg.get_all('Received') or []
+    sending_ip = None
     for i, hop in enumerate(received):
         print(f"  Hop {i+1}: {hop.strip()[:120]}")
+        ip_match = re.findall(r'\b(?:\d{1,3}\.){3}\d{1,3}\b', hop)
+        for ip in ip_match:
+            if not ip.startswith(('10.', '172.', '192.168.', '127.')):
+                sending_ip = ip
+                break
 
     # --- URL Extraction ---
     print("\n[5] URLS FOUND IN BODY")
-    urls = []
     body = ""
-
     if msg.is_multipart():
         for part in msg.walk():
-            content_type = part.get_content_type()
-            if content_type in ['text/plain', 'text/html']:
+            if part.get_content_type() in ['text/plain', 'text/html']:
                 try:
                     body += part.get_content()
                 except:
@@ -73,11 +124,14 @@ def analyze_email(filepath):
             pass
 
     urls = re.findall(r'https?://[^\s"<>]+', body)
+    unique_domains = set()
     if urls:
         for url in set(urls):
             parsed = urlparse(url)
             print(f"  URL    : {url[:100]}")
             print(f"  Domain : {parsed.netloc}")
+            if parsed.netloc and 'imgur.com' not in parsed.netloc:
+                unique_domains.add(parsed.netloc)
             print()
     else:
         print("  No URLs found in body")
@@ -94,9 +148,28 @@ def analyze_email(filepath):
     else:
         print("  No attachments found")
 
+    # --- Threat Intelligence ---
+    print("\n[7] THREAT INTELLIGENCE ENRICHMENT")
+
+    if sending_ip:
+        print(f"\n  AbuseIPDB — Sending IP: {sending_ip}")
+        print(f"  {check_abuseipdb(sending_ip)}")
+    else:
+        print("  Could not extract sending IP automatically")
+
+    if unique_domains:
+        print(f"\n  VirusTotal — Suspicious Domains:")
+        for domain in unique_domains:
+            vt_result = check_virustotal(domain)
+            print(f"  Domain : {domain}")
+            print(f"  Result : {vt_result}")
+    else:
+        print("\n  No suspicious domains to check on VirusTotal")
+
     print("\n" + "=" * 60)
     print("END OF REPORT")
     print("=" * 60)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

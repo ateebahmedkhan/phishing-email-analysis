@@ -1,0 +1,57 @@
+============================================================
+PHISHING EMAIL ANALYSIS REPORT
+============================================================
+
+[1] BASIC HEADERS
+  From       : Zonnepanelen installateur <zonnepaneel@appjj.serenitepure.fr>
+  Reply-To   : Zonnepanelen installateur <news@aichakandisha.com>
+  To         : phishing@pot
+  Subject    : 🔋 Zonnepanelen voor een goede prijs 
+  Date       : Thu, 03 Nov 2022 04:56:15 +0000
+
+[2] SPOOFING INDICATORS
+  From Domain    : appjj.serenitepure.fr
+  Reply-To Domain: aichakandisha.com
+  ⚠️  MISMATCH: From and Reply-To domains are different — spoofing indicator
+
+[3] AUTHENTICATION HEADERS
+  Received-SPF: None (protection.outlook.com: dturm.de does not designate permitted sender hosts)
+  Authentication-Results: spf=none (sender IP is 57.128.69.202) smtp.mailfrom=dturm.de; dkim=none (message not signed) header.d=none;dmarc=none ac
+  DKIM-Signature: NOT PRESENT
+  ARC-Authentication-Results: NOT PRESENT
+
+[4] RECEIVED CHAIN (email routing path)
+  Hop 1: from MN2PR19MB3966.namprd19.prod.outlook.com (::1) by MN0PR19MB6312.namprd19.prod.outlook.com with HTTPS; Thu, 3 Nov 202
+  Hop 2: from AM7PR02CA0005.eurprd02.prod.outlook.com (2603:10a6:20b:100::15) by MN2PR19MB3966.namprd19.prod.outlook.com (2603:10
+  Hop 3: from VI1EUR05FT048.eop-eur05.prod.protection.outlook.com (2603:10a6:20b:100::4) by AM7PR02CA0005.outlook.office365.com (
+  Hop 4: from dturm.de (57.128.69.202) by VI1EUR05FT048.mail.protection.outlook.com (10.233.243.188) with Microsoft SMTP Server i
+
+[5] URLS FOUND IN BODY
+  URL    : https://i.imgur.com/sOPmaS3.png'
+  Domain : i.imgur.com
+
+  URL    : https://i.imgur.com/Hr5TM3Y.png'
+  Domain : i.imgur.com
+
+  URL    : https://i.imgur.com/sOPmaS3.png')
+  Domain : i.imgur.com
+
+  URL    : http://go.nltrck.com/?c=495&amp;source=consumentenbond&amp;s1=&amp;lp=1190
+  Domain : go.nltrck.com
+
+
+[6] ATTACHMENTS
+  No attachments found
+
+[7] THREAT INTELLIGENCE ENRICHMENT
+
+  AbuseIPDB — Sending IP: 57.128.69.202
+  ✅  Clean — No reports, Country: FR, ISP: OVH SAS
+
+  VirusTotal — Suspicious Domains:
+  Domain : go.nltrck.com
+  Result : ✅  Clean — 0 detections out of 91 vendors
+
+============================================================
+END OF REPORT
+============================================================
